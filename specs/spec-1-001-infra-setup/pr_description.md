@@ -13,11 +13,11 @@
 
 ```mermaid
 graph TD
-    Client[Local PC] --> Kafka[Kafka Port 9092]
-    Client --> RabbitMQ[RabbitMQ Port 5672]
-    Client --> BullMQ[Redis Port 6379]
-    Client --> MQTT[Mosquitto Port 1883]
-    Client --> Postgres[PostgreSQL Port 5432]
+    Client["Local PC"] --> Kafka["Kafka Port 9092"]
+    Client --> RabbitMQ["RabbitMQ Port 5672"]
+    Client --> BullMQ["Redis Port 6379"]
+    Client --> MQTT["Mosquitto Port 1883"]
+    Client --> Postgres["PostgreSQL Port 5432"]
 ```
 
 ## 4. 테스트 결과 및 체크리스트 (Testing Checklist)

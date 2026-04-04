@@ -9,11 +9,11 @@
 
 ```mermaid
 graph TD
-    Client[Local PC] -->|Port 5432| DB[(PostgreSQL)]
-    Client -->|Port 9092| Kafka[Kafka KRaft]
-    Client -->|Port 5672/15672| RabbitMQ[RabbitMQ + UI]
-    Client -->|Port 6379| Redis[Redis / For BullMQ]
-    Client -->|Port 1883/9001| MQTT[Mosquitto]
+    Client["Local PC"] -->|"Port 5432"| DB[("PostgreSQL")]
+    Client -->|"Port 9092"| Kafka["Kafka KRaft"]
+    Client -->|"Port 5672/15672"| RabbitMQ["RabbitMQ + UI"]
+    Client -->|"Port 6379"| Redis["Redis / For BullMQ"]
+    Client -->|"Port 1883/9001"| MQTT["Mosquitto"]
 ```
 
 ## 3. 디렉토리/파일 변경 계획

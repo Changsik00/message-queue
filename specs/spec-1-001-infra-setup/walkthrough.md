@@ -12,12 +12,12 @@
 
 ```mermaid
 graph TD
-    Client[Local Developer] -->|5432| DB[PostgreSQL: mq_db]
-    Client -->|9092| Kafka[Kafka (KRaft Mode)]
-    Client -->|5672, 15672| RabbitMQ[RabbitMQ + UI]
-    Client -->|6379| Redis[Redis]
-    Client -->|1883, 9001| MQTT[Mosquitto + WebSocket]
-    DB -.-> Volume[/docker-entrypoint-initdb.d/]
+    Client["Local Developer"] -->|5432| DB[("PostgreSQL: mq_db")]
+    Client -->|9092| Kafka["Kafka (KRaft Mode)"]
+    Client -->|"5672, 15672"| RabbitMQ["RabbitMQ + UI"]
+    Client -->|6379| Redis["Redis"]
+    Client -->|"1883, 9001"| MQTT["Mosquitto + WebSocket"]
+    DB -.-> Volume["/docker-entrypoint-initdb.d/"]
 ```
 
 ## 3. 에러 해결 로그 (Troubleshooting)
