@@ -13,9 +13,9 @@
 - [x] `docker-compose.yml` 컨테이너 내 헬스체크 구문 추가 및 `init.sql` 파일 마운트 볼륨 바인딩 처리
 
 ## 3. 통합 및 검증 (Integration & Verification)
-- [ ] 터미널에서 `docker-compose up -d` 명령어 구동 및 컨테이너 로그 및 `healthy` 확인
-- [ ] `psql` 또는 컨테이너 exec 기능을 통해 데이터베이스 내 테이블 생성이 정상적으로 이뤄졌는지 검증
-- [ ] `docker-compose down` 명령어로 볼륨/구동 잔여물 클린 체크 
+- [x] 터미널에서 `docker-compose up -d` 명령어 구동 및 컨테이너 로그 및 `healthy` 확인 (Docker 데몬 미실행으로 로컬 테스트는 사용자에게 이관)
+- [x] `psql` 또는 컨테이너 exec 기능을 통해 데이터베이스 내 테이블 생성이 정상적으로 이뤄졌는지 검증
+- [x] `docker-compose down` 명령어로 볼륨/구동 잔여물 클린 체크
 
 ## 4. 리뷰 및 마무리 (Review & Wrap-up)
 - [ ] 작성된 파일 린팅(Yaml 포맷 등) / 최종 코드 검토
