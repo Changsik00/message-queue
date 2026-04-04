@@ -51,9 +51,9 @@
 
 각 단계별 상세한 목표와 Task는 `backlog/` 디렉토리에 정의되어 있습니다.
 
-| Phase | 단계 | 목표 | 기대 효과 | 링크 |
+| Phase | 단계 | 목표 | 기대 효과 | 상세 가이드 |
 |---|---|---|---|---|
-| **Phase 1** | **환경 구축** | Docker 인프라 구성 및 코어 아키텍처 설계 | **비교 기준점 확립** (동일 DB, 동일 이벤트 규격 마련) | [phase1.md](./backlog/phase1.md) |
+| **Phase 1** | **환경 구축** | Docker 인프라 구성 및 코어 아키텍처 설계 | **비교 기준점 확립** (동일 DB, 동일 이벤트 규격 마련) | [Infrastructure](./docs/architecture/infrastructure.md), [Overview](./docs/architecture/overview.md), [MQ Comparison](./docs/architecture/mq-comparison.md) |
 | **Phase 2** | **교체 구현** | 4종 MQ x 2언어(Python/Node) 구현 완료 | **각 MQ의 설계 철학 이해** (Queue vs Topic vs Job) | [phase2.md](./backlog/phase2.md) |
 | **Phase 3** | **극한 실험** | k6 부하 테스트 및 장애 모의 실험 | **정량적 데이터 확보** (초당 처리량, 지연 차트 생성) | [phase3.md](./backlog/phase3.md) |
 | **Phase 4** | **전략 도출** | 실무 시나리오 기반의 아키텍처 선택 가이드 작성 | **현업 적용 능력 확보** (Saga, Webhook 등 매칭) | [phase4.md](./backlog/phase4.md) |
