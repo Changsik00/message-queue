@@ -18,6 +18,6 @@
 - [x] `docker-compose down` 명령어로 볼륨/구동 잔여물 클린 체크
 
 ## 4. 리뷰 및 마무리 (Review & Wrap-up)
-- [ ] 작성된 파일 린팅(Yaml 포맷 등) / 최종 코드 검토
-- [ ] `walkthrough.md` 파일 초안 작성 추가 
-- [ ] **최종 기능 병합을 위한 PR(Pull Request) 생성 및 승인 요청 (`pr.md` 활용)**
+- [x] 작성된 파일 린팅(Yaml 포맷 등) / 최종 코드 검토
+- [x] `walkthrough.md` 파일 초안 작성 추가 
+- [x] **최종 기능 병합을 위한 PR(Pull Request) 생성 및 승인 요청 (`pr.md` 활용)**
