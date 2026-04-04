@@ -74,9 +74,9 @@ Phase 1을 마친 후, 이 질문들에 대한 답을 데이터로 찾아갈 것
 
 ### 📦 Spec 1-001. 인프라 기반 구축 (Infra MVP)
 > **동작 목표**: 코딩 없이 인프라 계층만 먼저 띄우고(DB, MQ), 접속 가능한 "데이터 파이프라인의 뼈대 환경"이 갖춰진 상태를 검증합니다.
-- [ ] **Docker Compose 구성**: Kafka, RabbitMQ, Redis, Mosquitto 및 PostgreSQL 구동 (헬스체크 포함)
-- [ ] **DB 스키마 셋업**: `init.sql`에 주문(`orders`) 및 결과 로그(`event_logs`) 테이블 정의
-- [ ] **검증**: `docker-compose up -d` 후 포트 충돌 없이 접속 가능한지 확인 (psql 접속 테스트 등)
+- [x] **Docker Compose 구성**: Kafka, RabbitMQ, Redis, Mosquitto 및 PostgreSQL 구동 (헬스체크 포함)
+- [x] **DB 스키마 셋업**: `init.sql`에 주문(`orders`) 및 결과 로그(`event_logs`) 테이블 정의
+- [x] **검증**: `docker-compose up -d` 후 포트 충돌 없이 접속 가능한지 확인 (psql 접속 테스트 등)
 
 ### ⚙️ Spec 1-002. 애플리케이션 코어 및 공통 인터페이스 설계 (Core MVP)
 > **동작 목표**: 향후 4가지 MQ 구현 시 비즈니스 로직 수정을 최소화하기 위한 '공통 뼈대(Interface)'와 데이터 규격(Schema)을 확정합니다. 실제 Message Queue 대신 기초적인 API 서버가 주문을 처리할 뼈대를 마련합니다.
