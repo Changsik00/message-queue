@@ -8,9 +8,9 @@
 ## 아키텍처 흐름
 ```mermaid
 graph TD
-    A[Client] -->|POST /orders| B[API Server (Python/Node)]
+    A[Client] -->|POST orders| B[API Server Python or Node]
     B --> C[Create OrderEvent]
-    C --> D[BaseQueue.publish Mock]
+    C --> D[BaseQueue publish Mock]
 ```
 
 ## 검증 결과

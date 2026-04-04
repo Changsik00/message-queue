@@ -6,10 +6,10 @@
 ## 2. 아키텍처 / 시스템 흐름 (Mermaid Graph)
 ```mermaid
 graph TD
-    A[Client] -->|POST /orders| B[API Server (Python/Node)]
+    A[Client] -->|POST orders| B[API Server Python or Node]
     B --> C[Create OrderEvent]
-    C --> D[BaseQueue.publish Mock]
-    D --> E[BaseQueue.consume Mock]
+    C --> D[BaseQueue publish Mock]
+    D --> E[BaseQueue consume Mock]
     E --> F[Worker Logic Setup]
 ```
 

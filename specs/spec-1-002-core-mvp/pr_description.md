@@ -19,10 +19,10 @@
 
 ```mermaid
 graph TD
-    A[Client UI / cURL] -->|HTTP POST /orders| B(API Server - Python / Node.js)
+    A[Client UI] -->|HTTP POST| B[API Server]
     B --> C{Create OrderEvent Object}
-    C -->|UUID 할당 및 publishedAt 마킹| D[MockQueue instance]
-    D -->|publish()| E[Console Mocking Output]
+    C -->|UUID marking| D[MockQueue instance]
+    D -->|publish event| E[Console Mocking Output]
     E --> F[Worker Consume Logic Placeholder]
 ```
 
