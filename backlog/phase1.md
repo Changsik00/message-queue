@@ -87,9 +87,10 @@ Phase 1을 마친 후, 이 질문들에 대한 답을 데이터로 찾아갈 것
 
 ### 📚 Spec 1-003. 아키텍처 구조 문서화 (Docs)
 > **동작 목표**: 구축된 인프라 및 코어 뼈대를 기반으로 전체 시스템의 기술 문서를 확립하여 향후 Phase 2 구현 시 가이드라인으로 활용합니다.
-- [ ] `docs/architecture/overview.md`: 플로우 다이어그램과 동작 설명
-- [ ] `docs/architecture/event-schema.md`: 각 이벤트 필드 정의 및 타임스탬프 목적 설명
-- [ ] `docs/architecture/infrastructure.md`: 각 MQ별 동작 포트 번호 명세 문서 
+- [x] `docs/architecture/overview.md`: 플로우 다이어그램과 동작 설명
+- [x] `docs/architecture/event-schema.md`: 각 이벤트 필드 정의 및 타임스탬프 목적 설명
+- [x] `docs/architecture/infrastructure.md`: 각 MQ별 동작 포트 번호 명세 문서 
+- [x] `docs/architecture/mq-comparison.md`: 4종 MQ 기술 심층 비교 및 선택 가이드 (추가 항목 완료)
 
 ---
 
