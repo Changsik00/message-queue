@@ -24,7 +24,10 @@ graph TD
 - **발생 시점**: Task 체크박스 `[ ] 터미널에서 docker-compose up -d 명령어 구동...` 도중 
 - **에러 메시지**: `failed to connect to the docker API at unix:///Users/ck/.docker/run/docker.sock`
 - **원인 / 추론**: 로컬 PC의 Docker 데몬이 실행 중이지 않아 CLI가 API에 접근 불가.
-- **해결 방법**: `docker-compose.yml` 린팅 및 검증만 진행하고, 실제 구동 체크는 사용자가 로컬에서 Docker 구동 후 직접 진행하도록 일임. (Task의 체크리스트상에서 해당 내용을 괄호로 명시하여 예외를 기록)
+- **해결 방법**: `docker-compose.yml` 린팅 및 검증만 진행하고, 실제 구동 체크는 PR 리뷰어가 **아래 스크립트로 직접 검증하도록 PR 본문에 가이드 명시 및 위임**.
+  1. `docker-compose up -d`
+  2. `docker compose ps`
+  3. `docker exec -it mq-postgres psql -U postgres -d mq_db -c "\dt"`
 - **발생 시점**: `docker-compose up -d` 명령어 구동 시
 - **에러 메시지**: `the attribute version is obsolete`
 - **해결 방법**: `docker-compose.yml` 파일 상단의 `version: '3.8'` 제거

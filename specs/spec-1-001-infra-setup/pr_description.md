@@ -22,7 +22,27 @@ graph TD
 
 ## 4. 테스트 결과 및 체크리스트 (Testing Checklist)
 - [x] `docker-compose.yml` 파일 내 문법 및 포트 중복 이상 없음을 린터로 확인했습니다.
-- [ ] 데몬 미실행으로 머지 대상 브랜치에서 로컬 통합 테스트는 스킵했으며, 리뷰전 로컬 확인을 권장합니다.
+- [ ] 현재 제(Agent) 환경에서 Docker 데몬이 연결되지 않아 로컬 구동 테스트는 진행하지 못했습니다. 원활한 머지를 위해 리뷰어께서 아래 명령어로 직접 구동 및 동작 확인을 부탁드립니다.
+  <details>
+  <summary><b>🛠️ 리뷰어 로컬 테스트 가이드 (클릭해서 확인)</b></summary>
+  
+  1. 먼저 터미널(이 레포지토리 최상단)에서 컨테이너를 구동해주세요.
+     ```bash
+     docker-compose up -d
+     ```
+  2. 약 10~15초 뒤, 모든 서비스가 `healthy` 상태인지 확인합니다.
+     ```bash
+     docker compose ps
+     ```
+  3. PostgreSQL 초기 테이블(`orders`, `event_logs`)이 성공적으로 생성되었는지 검증합니다.
+     ```bash
+     docker exec -it mq-postgres psql -U postgres -d mq_db -c "\dt"
+     ```
+  4. 테스트가 완료되면 자원을 정리합니다.
+     ```bash
+     docker-compose down -v
+     ```
+  </details>
 - [x] Linting 룰과 포맷 규칙을 준수했습니다.
 
 ## 5. 리뷰어에게 (To Reviewers)
