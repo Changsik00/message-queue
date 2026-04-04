@@ -19,6 +19,8 @@
 - [ ] (선택) 부하 테스트 또는 에지 케이스 검증
 
 ## 4. 리뷰 및 마무리 (Review & Wrap-up)
+- [ ] 개발된 내용이 정상 동작하는지 Agent 차원의 자체 로컬 테스트 및 검증 (필수)
 - [ ] 전체 기능 동작 확인 및 린팅(Linting) / 포맷팅(Formatting)
 - [ ] `walkthrough.md` 구조, 에러 로그 및 아키텍처 다이어그램(Mermaid) 최종 점검 및 업데이트
-- [ ] **최종 기능 병합을 위한 PR(Pull Request) 생성 및 승인 요청 (`pr.md` 활용)**
+- [ ] `pr_description.md` 파일 작성 (해당 스펙 폴더 내)
+- [ ] `git push` 후, 로컬 터미널의 `gh` CLI 명령어를 통해 리포지토리에 실제 PR 생성 (`gh pr create --title ... --body-file pr_description.md`)
