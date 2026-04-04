@@ -8,7 +8,7 @@
 - [x] 브랜치 생성 완료 (`git checkout -b spec-1-001/infra-setup`)
 
 ## 2. 세부 구현 (Implementation)
-- [ ] `db/init.sql` 파일 생성 (DDL 작성 - `orders`, `event_logs` 테이블)
+- [x] `db/init.sql` 파일 생성 (DDL 작성 - `orders`, `event_logs` 테이블)
 - [ ] `docker-compose.yml` 파일 작성 (Service 5개 할당: Kafka, RabbitMQ, Redis, Mosquitto, PostgreSQL)
 - [ ] `docker-compose.yml` 컨테이너 내 헬스체크 구문 추가 및 `init.sql` 파일 마운트 볼륨 바인딩 처리
 
