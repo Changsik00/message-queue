@@ -22,6 +22,6 @@ graph TD
 
 ## 4. 테스트 전략 (Testing Strategy)
 - Integration Test (수동 로컬 검증):
-  1. `docker-compose up -d` 후 `docker ps` 에서 `healthy` 상태 점검.
+  1. `docker compose up -d` 후 `docker ps` 에서 `healthy` 상태 점검.
   2. DBeaver나 `psql` 을 활용하여 `localhost:5432`로 DB 접속 성공 및 테이블 존재 여부 확인.
   3. `http://localhost:15672` (RabbitMQ Management) 브라우저 접속 확인.

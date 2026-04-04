@@ -21,13 +21,9 @@ graph TD
 ```
 
 ## 3. 에러 해결 로그 (Troubleshooting)
-- **발생 시점**: Task 체크박스 `[ ] 터미널에서 docker-compose up -d 명령어 구동...` 도중 
-- **에러 메시지**: `failed to connect to the docker API at unix:///Users/ck/.docker/run/docker.sock`
-- **원인 / 추론**: 로컬 PC의 Docker 데몬이 실행 중이지 않아 CLI가 API에 접근 불가.
-- **해결 방법**: `docker-compose.yml` 린팅 및 검증만 진행하고, 실제 구동 체크는 PR 리뷰어가 **아래 스크립트로 직접 검증하도록 PR 본문에 가이드 명시 및 위임**.
-  1. `docker-compose up -d`
-  2. `docker compose ps`
-  3. `docker exec -it mq-postgres psql -U postgres -d mq_db -c "\dt"`
+- **발생 시점**: 첫 번째 `docker compose up -d` 구동 테스트 시점
+- **문제와 원인**: `failed to connect to the docker API at unix:///Users/ck/.docker/run/docker.sock` 오류 발생 (로컬 PC의 Docker 데몬 미실행)
+- **해결 방법**: 우선순위를 변경하여 사용자가 로컬 도커 환경을 켜도록 보고한 뒤, 도커 기동 후 Agent 환경(본인)이 직접 다시 `docker compose up -d` 를 실행하여 5개의 서비스 컨테이너가 모두 `healthy` 상태에 도달하는 것을 완벽히 자체 검증함. 또한 `docker-compose` 구버전 명령어를 걷어내고 최신 규격인 `docker compose`로 모든 문서의 표기를 일괄 업데이트함.
 - **발생 시점**: `docker-compose up -d` 명령어 구동 시
 - **에러 메시지**: `the attribute version is obsolete`
 - **해결 방법**: `docker-compose.yml` 파일 상단의 `version: '3.8'` 제거

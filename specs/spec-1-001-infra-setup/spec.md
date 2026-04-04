@@ -21,7 +21,7 @@
 
 - **Scenario 1**: 로컬 개발망 클린 환경 가동
   - **Given**: 아무 Docker 컨테이너도 띄워지지 않은 클린 상태에서
-  - **When**: 터미널에 `docker-compose up -d` 를 실행하면
+  - **When**: 터미널에 `docker compose up -d` 를 실행하면
   - **Then**: 모든 컨테이너가 `healthy` 상태에 도달하고 로컬 환경(호스트) 포트 매핑으로 PostgreSQL(5432) 및 RabbitMQ UI(15672) 등 접속이 가능해야 한다.
 
 ## 5. 참고 자료 (References)

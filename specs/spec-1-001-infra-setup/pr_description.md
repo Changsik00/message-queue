@@ -28,7 +28,7 @@ graph TD
   
   1. 먼저 터미널(이 레포지토리 최상단)에서 컨테이너를 구동해주세요.
      ```bash
-     docker-compose up -d
+     docker compose up -d
      ```
   2. 약 10~15초 뒤, 모든 서비스가 `healthy` 상태인지 확인합니다.
      ```bash
@@ -40,7 +40,7 @@ graph TD
      ```
   4. 테스트가 완료되면 자원을 정리합니다.
      ```bash
-     docker-compose down -v
+     docker compose down -v
      ```
   </details>
 - [x] Linting 룰과 포맷 규칙을 준수했습니다.
