@@ -3,15 +3,23 @@ import json
 import os
 import sys
 from datetime import datetime, timezone
+from typing import Optional
 from aiokafka import AIOKafkaConsumer
-from sqlalchemy import create_engine, text
+from sqlmodel import Field, Session, SQLModel, create_engine, select
 
-# add 프로젝트 루트를 sys.path에 추가하여 base_queue 임포트 가능하게 함
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
-# from workers.python.base_queue import OrderEvent
+# Data Model
+class ProcessedEvent(SQLModel, table=True):
+    __tablename__ = "processed_events"
+    id: Optional[int] = Field(default=None, primary_key=True)
+    event_id: str
+    group_id: str
+    mq_type: str
+    data: str
+    processed_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    latency_ms: int
 
 # DB 연결 정보
-DB_URL = os.getenv("DATABASE_URL", "postgresql://user:password@localhost:5432/mq_db")
+DB_URL = os.getenv("DATABASE_URL", "postgresql://postgres:password@localhost:5432/mq_db")
 engine = create_engine(DB_URL)
 
 async def consume_orders():
@@ -42,20 +50,17 @@ async def consume_orders():
             
             print(f" [x] {group_id} Received: {order_id} (Latency: {latency_ms}ms)")
             
-            # DB 저장
-            with engine.connect() as conn:
-                query = text("""
-                    INSERT INTO processed_events (event_id, group_id, mq_type, data, latency_ms)
-                    VALUES (:event_id, :group_id, :mq_type, :data, :latency_ms)
-                """)
-                conn.execute(query, {
-                    "event_id": order_id,
-                    "group_id": group_id,
-                    "mq_type": "kafka",
-                    "data": json.dumps(event_dict),
-                    "latency_ms": latency_ms
-                })
-                conn.commit()
+            # DB 저장 (SQLModel)
+            with Session(engine) as session:
+                event_record = ProcessedEvent(
+                    event_id=order_id,
+                    group_id=group_id,
+                    mq_type="kafka",
+                    data=json.dumps(event_dict),
+                    latency_ms=latency_ms
+                )
+                session.add(event_record)
+                session.commit()
                 
     finally:
         await consumer.stop()
