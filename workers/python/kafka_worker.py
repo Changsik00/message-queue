@@ -3,20 +3,13 @@ import json
 import os
 import sys
 from datetime import datetime, timezone
-from typing import Optional
-from aiokafka import AIOKafkaConsumer
-from sqlmodel import Field, Session, SQLModel, create_engine, select
 
-# Data Model
-class ProcessedEvent(SQLModel, table=True):
-    __tablename__ = "processed_events"
-    id: Optional[int] = Field(default=None, primary_key=True)
-    event_id: str
-    group_id: str
-    mq_type: str
-    data: str
-    processed_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    latency_ms: int
+# 프로젝트 루트를 sys.path에 추가하여 common 임포트 가능하게 함
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'api-server', 'python'))
+from common.models import ProcessedEvent
+
+from aiokafka import AIOKafkaConsumer
+from sqlmodel import Session, create_engine
 
 # DB 연결 정보
 DB_URL = os.getenv("DATABASE_URL", "postgresql://postgres:password@localhost:5432/mq_db")
