@@ -1,5 +1,8 @@
 import sys
 import os
+import json
+import asyncio
+from aiokafka import AIOKafkaProducer
 from fastapi import FastAPI
 from pydantic import BaseModel
 import uvicorn
@@ -11,18 +14,51 @@ from base_queue import OrderEvent, BaseQueue
 
 app = FastAPI()
 
-class MockQueue(BaseQueue):
+class KafkaQueue(BaseQueue):
+    def __init__(self):
+        self.producer = None
+        self.loop = asyncio.get_event_loop()
+        self.bootstrap_servers = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
+
+    async def start(self):
+        self.producer = AIOKafkaProducer(
+            bootstrap_servers=self.bootstrap_servers,
+            value_serializer=lambda v: json.dumps(v).encode('utf-8')
+        )
+        await self.producer.start()
+        print(f"KafkaQueue: Connected to {self.bootstrap_servers}")
+
+    async def stop(self):
+        if self.producer:
+            await self.producer.stop()
+
     def connect(self) -> None:
-        print("MockQueue: Connected")
+        # FastAPI startup handler will call start()
+        pass
     
+    async def publish_async(self, event: OrderEvent) -> None:
+        if not self.producer:
+            await self.start()
+        await self.producer.send_and_wait("orders", event.model_dump(mode='json'))
+        print(f"KafkaQueue: Published event {event.order_id}")
+
     def publish(self, event: OrderEvent) -> None:
-        print(f"MockQueue: Published event {event.order_id} at {event.published_at}")
+        # This is for compatibility with the interface if called synchronously
+        # In FastAPI, we should use publish_async
+        pass
     
     def consume(self) -> None:
-        print("MockQueue: Consuming started")
+        pass
 
-queue = MockQueue()
-queue.connect()
+queue = KafkaQueue()
+
+@app.on_event("startup")
+async def startup_event():
+    await queue.start()
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    await queue.stop()
 
 class CreateOrderRequest(BaseModel):
     amount: float
@@ -36,7 +72,7 @@ async def create_order(req: CreateOrderRequest):
         amount=req.amount,
         items=req.items
     )
-    queue.publish(event)
+    await queue.publish_async(event)
     return {"status": "success", "event": event.model_dump()}
 
 if __name__ == "__main__":
