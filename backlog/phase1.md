@@ -1,6 +1,6 @@
 # Phase 1 — 환경 세팅 & 아키텍처 이해
 
-> **기간**: Week 1 | **상태**: 🔲 대기
+> **기간**: Week 1 | **상태**: ✅ 완료
 
 ---
 
@@ -80,10 +80,10 @@ Phase 1을 마친 후, 이 질문들에 대한 답을 데이터로 찾아갈 것
 
 ### ⚙️ Spec 1-002. 애플리케이션 코어 및 공통 인터페이스 설계 (Core MVP)
 > **동작 목표**: 향후 4가지 MQ 구현 시 비즈니스 로직 수정을 최소화하기 위한 '공통 뼈대(Interface)'와 데이터 규격(Schema)을 확정합니다. 실제 Message Queue 대신 기초적인 API 서버가 주문을 처리할 뼈대를 마련합니다.
-- [ ] **이벤트 스키마 정의**: Latency 측정을 위해 `publishedAt`을 포함한 `OrderEvent` 데이터 모델 작성 (Python Pydantic, TS Interface)
-- [ ] **추상화 인터페이스**: `base_queue` 기초 설계 (`connect`, `publish`, `consume` 등)
-- [ ] **API 서버 & Worker 뼈대**: HTTP POST `/orders`를 받아 이벤트를 생성하고, Worker가 수신하는 Mock 파이프라인 작성
-- [ ] **검증**: 기본 API 서버 구동 및 HTTP 요청 처리에 대한 기초 확인
+- [x] **이벤트 스키마 정의**: Latency 측정을 위해 `publishedAt`을 포함한 `OrderEvent` 데이터 모델 작성 (Python Pydantic, TS Interface)
+- [x] **추상화 인터페이스**: `base_queue` 기초 설계 (`connect`, `publish`, `consume` 등)
+- [x] **API 서버 & Worker 뼈대**: HTTP POST `/orders`를 받아 이벤트를 생성하고, Worker가 수신하는 Mock 파이프라인 작성
+- [x] **검증**: 기본 API 서버 구동 및 HTTP 요청 처리에 대한 기초 확인
 
 ### 📚 Spec 1-003. 아키텍처 구조 문서화 (Docs)
 > **동작 목표**: 구축된 인프라 및 코어 뼈대를 기반으로 전체 시스템의 기술 문서를 확립하여 향후 Phase 2 구현 시 가이드라인으로 활용합니다.
@@ -110,10 +110,10 @@ Phase 1을 마친 후, 이 질문들에 대한 답을 데이터로 찾아갈 것
 
 ## 📝 이 Phase를 마치면 알 수 있는 것
 
-- [ ] MQ가 없으면 이 구조가 왜 문제인지 설명할 수 있다
-- [ ] 이벤트 스키마에서 `publishedAt`이 왜 필요한지 설명할 수 있다
-- [ ] 공통 인터페이스 추상화가 왜 MQ 교체를 쉽게 만드는지 설명할 수 있다
-- [ ] `docker-compose up -d`로 4종 MQ 모두 로컬에서 실행할 수 있다
+- [x] MQ가 없으면 이 구조가 왜 문제인지 설명할 수 있다
+- [x] 이벤트 스키마에서 `publishedAt`이 왜 필요한지 설명할 수 있다
+- [x] 공통 인터페이스 추상화가 왜 MQ 교체를 쉽게 만드는지 설명할 수 있다
+- [x] `docker-compose up -d`로 4종 MQ 모두 로컬에서 실행할 수 있다
 
 ---
 
