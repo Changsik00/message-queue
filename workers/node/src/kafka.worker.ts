@@ -24,7 +24,7 @@ async function runWorker() {
     console.log(`[*] Node.js Worker (${GROUP_ID}) started. Listening on ${KAFKA_BOOTSTRAP_SERVERS}...`);
 
     await consumer.run({
-        eachMessage: async ({ topic, partition, message }) => {
+        eachMessage: async ({ topic, partition, message }: { topic: string, partition: number, message: any }) => {
             if (!message.value) return;
 
             const eventData = JSON.parse(message.value.toString());

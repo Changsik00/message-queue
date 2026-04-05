@@ -4,11 +4,11 @@ import os
 import sys
 from datetime import datetime, timezone
 from aiokafka import AIOKafkaConsumer
-from sqlalchemy import create_all_engines, create_engine, text
+from sqlalchemy import create_engine, text
 
 # add 프로젝트 루트를 sys.path에 추가하여 base_queue 임포트 가능하게 함
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
-from workers.python.base_queue import OrderEvent
+# from workers.python.base_queue import OrderEvent
 
 # DB 연결 정보
 DB_URL = os.getenv("DATABASE_URL", "postgresql://user:password@localhost:5432/mq_db")
