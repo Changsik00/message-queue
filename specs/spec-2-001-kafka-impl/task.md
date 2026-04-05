@@ -7,12 +7,12 @@
 
 ## 2. 세부 구현 (Implementation)
 - [x] API Server (Python) `KafkaProducer` 구현 및 `orders` 토픽 발행 연동
-- [ ] Python Kafka Worker (`kafka_worker.py`) 구현
-    - [ ] `payment-group` 설정 및 메시지 핸들러 작성
-    - [ ] PostgreSQL DB 저장 로직 추가
-- [ ] Node.js Kafka Worker (`kafka.worker.ts`) 구현
-    - [ ] `inventory-group` 설정 및 메시지 핸들러 작성
-    - [ ] PostgreSQL DB 저장 로직 추가
+- [x] Python Kafka Worker (`kafka_worker.py`) 구현
+    - [x] `payment-group` 설정 및 메시지 핸들러 작성
+    - [x] PostgreSQL DB 저장 로직 추가
+- [x] Node.js Kafka Worker (`kafka.worker.ts`) 구현
+    - [x] `inventory-group` 설정 및 메시지 핸들러 작성
+    - [x] PostgreSQL DB 저장 로직 추가
 
 ## 3. 통합 및 검증 (Integration & Verification)
 - [ ] Docker Compose로 Kafka & PostgreSQL 환경 기동
