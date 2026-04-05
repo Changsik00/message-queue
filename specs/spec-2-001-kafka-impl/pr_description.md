@@ -14,12 +14,12 @@
 ## 3. 아키텍처 및 로직 흐름 (Mermaid)
 ```mermaid
 graph TD
-    A["Client"] -->| "POST /orders" | B["Python API Server"]
-    B -->| "Produce OrderEvent" | C["Kafka Broker"]
-    C -->| "Consume" | D["Python Worker (payment-group)"]
-    C -->| "Consume" | E["Node.js Worker (inventory-group)"]
-    D -->| "Insert Log" | F["PostgreSQL"]
-    E -->| "Insert Log" | F
+    A["Client"] -->|POST_orders| B["Python API Server"]
+    B -->|Produce_OrderEvent| C["Kafka Broker"]
+    C -->|Consume| D["Python Worker (payment-group)"]
+    C -->|Consume| E["Node.js Worker (inventory-group)"]
+    D -->|Insert_Log| F["PostgreSQL"]
+    E -->|Insert_Log| F
 ```
 
 ## 4. 테스트 결과 및 체크리스트 (Testing Checklist)
