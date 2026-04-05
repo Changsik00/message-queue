@@ -6,7 +6,7 @@
 - [x] Node.js 의존성 추가 (`kafkajs`)
 
 ## 2. 세부 구현 (Implementation)
-- [ ] API Server (Python) `KafkaProducer` 구현 및 `orders` 토픽 발행 연동
+- [x] API Server (Python) `KafkaProducer` 구현 및 `orders` 토픽 발행 연동
 - [ ] Python Kafka Worker (`kafka_worker.py`) 구현
     - [ ] `payment-group` 설정 및 메시지 핸들러 작성
     - [ ] PostgreSQL DB 저장 로직 추가
