@@ -15,11 +15,11 @@
     - [x] PostgreSQL DB 저장 로직 추가
 
 ## 3. 통합 및 검증 (Integration & Verification)
-- [ ] Docker Compose로 Kafka & PostgreSQL 환경 기동
-- [ ] `processed_events` 테이블 생성 (`schema.sql` 등 활용)
-- [ ] API 호출을 통해 `orders` 이벤트 발행
-- [ ] DB에 `payment-group`과 `inventory-group` 처리 로그가 각각 잘 쌓였는지 쿼리로 확인
-- [ ] 두 워커가 동시에 같은 메시지를 수신했는지 최종 검증
+- [x] Docker Compose로 Kafka & PostgreSQL 환경 기동
+- [x] `processed_events` 테이블 생성 (`schema.sql` 등 활용)
+- [x] API 호출을 통해 `orders` 이벤트 발행
+- [x] DB에 `payment-group`과 `inventory-group` 처리 로그가 각각 잘 쌓였는지 쿼리로 확인
+- [x] 두 워커가 동시에 같은 메시지를 수신했는지 최종 검증
 
 ## 4. 리뷰 및 마무리 (Review & Wrap-up)
 - [ ] 개발된 내용이 정상 동작하는지 Agent 차원의 자체 로컬 테스트 및 검증 (필수)
