@@ -2,8 +2,8 @@
 
 ## 1. 사전 준비 (Setup & TDD Draft)
 - [x] 브랜치 생성 완료 (`git checkout -b spec-2-001/kafka-impl`)
-- [ ] Python 의존성 추가 (`aiokafka`)
-- [ ] Node.js 의존성 추가 (`kafkajs`)
+- [x] Python 의존성 추가 (`aiokafka`)
+- [x] Node.js 의존성 추가 (`kafkajs`)
 
 ## 2. 세부 구현 (Implementation)
 - [ ] API Server (Python) `KafkaProducer` 구현 및 `orders` 토픽 발행 연동
