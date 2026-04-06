@@ -8,9 +8,8 @@ from pydantic import BaseModel
 import uvicorn
 import uuid
 
-# add workers/python to sys.path to resolve base_queue
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'workers', 'python'))
-from base_queue import OrderEvent, BaseQueue
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'packages'))
+from shared_python import OrderEvent, BaseQueue
 
 app = FastAPI()
 
