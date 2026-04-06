@@ -15,3 +15,11 @@ env/
 .venv/
 .pytest_cache/
 .coverage
+*.egg-info/
+.eggs/
+
+# Alembic
+alembic/__pycache__/
+
+# pnpm
+.pnpm-store/
