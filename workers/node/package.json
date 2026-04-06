@@ -1,5 +1,5 @@
 {
-  "name": "node",
+  "name": "@mq/workers-node",
   "version": "1.0.0",
   "packageManager": "pnpm@9.15.6",
   "type": "module",
@@ -17,6 +17,7 @@
     "typescript": "6.0.2"
   },
   "dependencies": {
+    "@mq/shared-node": "workspace:*",
     "acorn": "8.16.0",
     "acorn-walk": "8.3.5",
     "arg": "4.1.3",

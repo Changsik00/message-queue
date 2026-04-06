@@ -1,0 +1,4 @@
+packages:
+  - 'packages/*'
+  - 'api-server/node'
+  - 'workers/node'

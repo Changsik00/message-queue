@@ -1,6 +1,6 @@
 import express from 'express';
 import { v4 as uuidv4 } from 'uuid';
-import type { BaseQueue, OrderEvent } from '../../../workers/node/src/base-queue.interface';
+import type { BaseQueue, OrderEvent } from '@mq/shared-node';
 
 const app = express();
 app.use(express.json());
