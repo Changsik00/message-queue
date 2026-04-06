@@ -3,8 +3,9 @@ node_modules/
 dist/
 build/
 npm-debug.log
-.env
-.DS_Store
+
+# pnpm
+.pnpm-store/
 
 # Python
 __pycache__/
@@ -21,5 +22,20 @@ env/
 # Alembic
 alembic/__pycache__/
 
-# pnpm
-.pnpm-store/
+# Environment
+.env
+.env.*
+!.env.example
+
+# AI / IDE
+.claude/
+.vscode/
+.idea/
+*.code-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python version manager
+.python-version
