@@ -22,9 +22,9 @@
 - [x] 두 워커가 동시에 같은 메시지를 수신했는지 최종 검증
 
 ## 4. 리뷰 및 마무리 (Review & Wrap-up)
-- [ ] 개발된 내용이 정상 동작하는지 Agent 차원의 자체 로컬 테스트 및 검증 (필수)
-- [ ] 전체 기능 동작 확인 및 린팅(Linting) / 포맷팅(Formatting)
-- [ ] `walkthrough.md` 업데이트
-- [ ] `pr_description.md` 파일 작성
-- [ ] `gh pr create`를 통한 PR 생성
+- [x] 개발된 내용이 정상 동작하는지 Agent 차원의 자체 로컬 테스트 및 검증 (필수)
+- [x] 전체 기능 동작 확인 및 린팅(Linting) / 포맷팅(Formatting)
+- [x] `walkthrough.md` 업데이트
+- [x] `pr_description.md` 파일 작성
+- [x] `gh pr create`를 통한 PR 생성
 
