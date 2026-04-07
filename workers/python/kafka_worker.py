@@ -4,9 +4,8 @@ import os
 import sys
 from datetime import datetime, timezone
 
-# 프로젝트 루트를 sys.path에 추가하여 common 임포트 가능하게 함
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'api-server', 'python'))
-from common.models import ProcessedEvent
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'packages'))
+from shared_python import ProcessedEvent
 
 from aiokafka import AIOKafkaConsumer
 from sqlmodel import Session, create_engine

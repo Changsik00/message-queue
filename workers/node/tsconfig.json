@@ -1,12 +1,8 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "module": "nodenext",
-    "target": "esnext",
-    "moduleResolution": "nodenext",
-    "strict": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "types": ["node"]
   },
   "include": ["src/**/*"]
 }
