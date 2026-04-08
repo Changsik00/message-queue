@@ -1,0 +1,344 @@
+From ce1789c875b20f6780ef0c1a0ab022fd1562e5ef Mon Sep 17 00:00:00 2001
+From: changsik <lowmans00@gmail.com>
+Date: Wed, 8 Apr 2026 23:17:23 +0900
+Subject: [PATCH] chore: setup rabbitmq branch and dependencies
+
+---
+ api-server/python/requirements.txt     |  1 +
+ pnpm-lock.yaml                         | 26 +++++++++
+ specs/spec-2-003-rabbitmq-impl/plan.md | 65 ++++++++++++++++++++++
+ specs/spec-2-003-rabbitmq-impl/spec.md | 76 ++++++++++++++++++++++++++
+ specs/spec-2-003-rabbitmq-impl/task.md | 42 ++++++++++++++
+ workers/node/package.json              |  2 +
+ workers/python/requirements.txt        |  1 +
+ 7 files changed, 213 insertions(+)
+ create mode 100644 specs/spec-2-003-rabbitmq-impl/plan.md
+ create mode 100644 specs/spec-2-003-rabbitmq-impl/spec.md
+ create mode 100644 specs/spec-2-003-rabbitmq-impl/task.md
+
+diff --git a/api-server/python/requirements.txt b/api-server/python/requirements.txt
+index 533596d..b59f519 100644
+--- a/api-server/python/requirements.txt
++++ b/api-server/python/requirements.txt
+@@ -20,3 +20,4 @@ starlette==0.49.3
+ typing-inspection==0.4.2
+ typing_extensions==4.15.0
+ uvicorn==0.39.0
++aio-pika==9.5.3
+diff --git a/pnpm-lock.yaml b/pnpm-lock.yaml
+index 4b9ec3c..ad2ec7c 100644
+--- a/pnpm-lock.yaml
++++ b/pnpm-lock.yaml
+@@ -52,6 +52,9 @@ importers:
+       acorn-walk:
+         specifier: 8.3.5
+         version: 8.3.5
++      amqplib:
++        specifier: ^1.0.3
++        version: 1.0.3
+       arg:
+         specifier: 4.1.3
+         version: 4.1.3
+@@ -80,6 +83,9 @@ importers:
+         specifier: 3.1.1
+         version: 3.1.1
+     devDependencies:
++      '@types/amqplib':
++        specifier: ^0.10.8
++        version: 0.10.8
+       '@types/node':
+         specifier: 25.5.2
+         version: 25.5.2
+@@ -277,6 +283,9 @@ packages:
+   '@tsconfig/node16@1.0.4':
+     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
+ 
++  '@types/amqplib@0.10.8':
++    resolution: {integrity: sha512-vtDp8Pk1wsE/AuQ8/Rgtm6KUZYqcnTgNvEHwzCkX8rL7AGsC6zqAfKAAJhUZXFhM/Pp++tbnUHiam/8vVpPztA==}
++
+   '@types/body-parser@1.19.6':
+     resolution: {integrity: sha512-HLFeCYgz89uk22N5Qg3dvGvsv46B8GLvKKo1zKG4NybA8U2DiEO3w9lqGg29t/tfLRJpJ6iQxnVw4OnB7MoM9g==}
+ 
+@@ -326,6 +335,10 @@ packages:
+     engines: {node: '>=0.4.0'}
+     hasBin: true
+ 
++  amqplib@1.0.3:
++    resolution: {integrity: sha512-nsrXa59tvX4HPjPPW8JJGuBb/Db0MOq3DOhGdSbIY7bTsQDMV2fmF9c3i74g/8Gt9+QWyrxfEPppOOoV9lK1uQ==}
++    engines: {node: '>=18'}
++
+   arg@4.1.3:
+     resolution: {integrity: sha512-58S9QDqG0Xx27YwPSt9fJxivjYl432YCwfDMfZ+71RAqUrZef7LrKQZ3LHLOwCS4FLNBplP533Zx895SeOCHvA==}
+ 
+@@ -333,6 +346,9 @@ packages:
+     resolution: {integrity: sha512-oP5VkATKlNwcgvxi0vM0p/D3n2C3EReYVX+DNYs5TjZFn/oQt2j+4sVJtSMr18pdRr8wjTcBl6LoV+FUwzPmNA==}
+     engines: {node: '>=18'}
+ 
++  buffer-more-ints@1.0.0:
++    resolution: {integrity: sha512-EMetuGFz5SLsT0QTnXzINh4Ksr+oo4i+UGTXEshiGCQWnsgSs7ZhJ8fzlwQ+OzEMs0MpDAMr1hxnblp5a4vcHg==}
++
+   bytes@3.1.2:
+     resolution: {integrity: sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==}
+     engines: {node: '>= 0.8'}
+@@ -806,6 +822,10 @@ snapshots:
+ 
+   '@tsconfig/node16@1.0.4': {}
+ 
++  '@types/amqplib@0.10.8':
++    dependencies:
++      '@types/node': 25.5.2
++
+   '@types/body-parser@1.19.6':
+     dependencies:
+       '@types/connect': 3.4.38
+@@ -866,6 +886,10 @@ snapshots:
+ 
+   acorn@8.16.0: {}
+ 
++  amqplib@1.0.3:
++    dependencies:
++      buffer-more-ints: 1.0.0
++
+   arg@4.1.3: {}
+ 
+   body-parser@2.2.2:
+@@ -882,6 +906,8 @@ snapshots:
+     transitivePeerDependencies:
+       - supports-color
+ 
++  buffer-more-ints@1.0.0: {}
++
+   bytes@3.1.2: {}
+ 
+   call-bind-apply-helpers@1.0.2:
+diff --git a/specs/spec-2-003-rabbitmq-impl/plan.md b/specs/spec-2-003-rabbitmq-impl/plan.md
+new file mode 100644
+index 0000000..81d3e35
+--- /dev/null
++++ b/specs/spec-2-003-rabbitmq-impl/plan.md
+@@ -0,0 +1,65 @@
++# Plan: 2-003 - RabbitMQ 구현 (RabbitMQ MVP)
++
++## 1. 접근 방법론 (Approach)
++
++### 핵심 설계 결정
++- **Exchange 전략**: `direct` Exchange를 사용하여 `order.created` Routing Key로 메시지 라우팅. 향후 fanout 확장 시에는 Exchange 타입만 변경하면 됨.
++- **Queue 전략**: `orders.queue` 하나를 Python·Node.js 워커가 **공유 컨슈밍(Competing Consumers)**. 이것이 Kafka Consumer Group과 본질적으로 다른 RabbitMQ의 철학을 드러냄.
++- **DLQ 패턴**: `orders.queue` 선언 시 `x-dead-letter-exchange` 인수를 사용해 DLQ 라우팅을 선언 수준에서 정의. 별도의 애플리케이션 로직 불필요.
++- **수동 ack**: `autoAck=false` (amqplib) / `no_ack=False` (aio-pika) 로 Consumer를 선언하여, 처리 성공/실패 시 명시적으로 `ack()` / `nack()` 호출. Prefetch count=1 설정으로 한 번에 하나의 메시지만 처리.
++- **인위적 실패 로직**: Python 워커에서 환경변수 `SIMULATE_FAILURE=true` 설정 시 50% 확률로 강제 예외 발생 → nack → DLQ 이동 시뮬레이션.
++
++### 라이브러리 선택
++| | Python | Node.js |
++|---|---|---|
++| 라이브러리 | `aio-pika` (비동기) | `amqplib` |
++| 이유 | 기존 aiokafka와 동일한 asyncio 패턴 일관성 | kafkajs와 동일한 패턴 일관성 |
++
++## 2. 아키텍처 / 시스템 흐름 (Mermaid Graph)
++
++```mermaid
++sequenceDiagram
++    participant API as API Server (Producer)
++    participant EX as orders Exchange (direct)
++    participant Q as orders.queue
++    participant PY as Python Worker
++    participant ND as Node.js Worker
++    participant DLQ as dead-letter.queue
++    participant DB as PostgreSQL
++
++    API->>EX: Publish(order.created)
++    EX->>Q: Route by Binding Key
++
++    alt Python Worker가 먼저 수신
++        Q-->>PY: Push Message (prefetch=1)
++        alt 정상 처리
++            PY->>DB: INSERT processed_events
++            PY->>Q: ack()
++        else 예외 발생 (SIMULATE_FAILURE)
++            PY->>Q: nack(requeue=False)
++            Q->>DLQ: Dead Letter Routing
++        end
++    else Node.js Worker가 먼저 수신
++        Q-->>ND: Push Message (prefetch=1)
++        ND->>DB: INSERT processed_events
++        ND->>Q: ack()
++    end
++```
++
++## 3. 디렉토리/파일 변경 계획
++
++- `[MODIFY]` `api-server/python/main.py` — RabbitMQ용 `POST /rabbitmq/orders` 엔드포인트 추가
++- `[MODIFY]` `api-server/python/requirements.txt` — `aio-pika` 추가
++- `[NEW]` `workers/python/rabbitmq_worker.py` — Python aio-pika Consumer (ack/nack/DLQ 포함)
++- `[MODIFY]` `workers/python/requirements.txt` — `aio-pika` 추가
++- `[NEW]` `workers/node/src/rabbitmq.worker.ts` — Node.js amqplib Consumer (ack/nack 포함)
++- `[MODIFY]` `workers/node/package.json` — `amqplib`, `@types/amqplib` 추가
++
++## 4. 테스트 전략 (Testing Strategy)
++
++- **Unit Test**: 별도 작성 없음 (Worker 로직이 경량 — 통합 테스트로 대체)
++- **Integration Test**:
++  1. `docker compose up postgres rabbitmq -d` 로 인프라 기동
++  2. Python Worker, Node.js Worker 동시 실행
++  3. `POST /rabbitmq/orders` 5회 호출 → DB에 `mq_type='rabbitmq'` 레코드 수 확인
++  4. `SIMULATE_FAILURE=true python rabbitmq_worker.py` 실행 후 메시지 발행 → RabbitMQ UI에서 `dead-letter.queue` 메시지 적재 확인
+diff --git a/specs/spec-2-003-rabbitmq-impl/spec.md b/specs/spec-2-003-rabbitmq-impl/spec.md
+new file mode 100644
+index 0000000..025b2d8
+--- /dev/null
++++ b/specs/spec-2-003-rabbitmq-impl/spec.md
+@@ -0,0 +1,76 @@
++# Spec: 2-003 - RabbitMQ 구현 (RabbitMQ MVP)
++
++## 1. 개요 (Overview)
++- **목표**: RabbitMQ의 핵심 철학인 **Broker-Push 기반 전달**과 **수동 ack/nack 제어**, 그리고 처리 실패 시 **Dead Letter Queue(DLQ)** 로의 메시지 이동을 직접 구현하고 검증한다.
++- **영향 범위**:
++  - `api-server/python/main.py` — RabbitMQ Producer 엔드포인트 추가
++  - `workers/python/rabbitmq_worker.py` — 신규 Python RabbitMQ Consumer
++  - `workers/node/src/rabbitmq.worker.ts` — 신규 Node.js RabbitMQ Consumer
++  - `workers/python/requirements.txt` — `aio-pika` 추가
++  - `workers/node/package.json` — `amqplib`, `@types/amqplib` 추가
++  - `docker-compose.yml` — RabbitMQ 서비스 이미 정의됨 (변경 불필요)
++- **관련 스펙**: Spec 2-001 (Kafka MVP), Spec 2-002 (표준화)
++
++## 2. 상세 요구사항 (Requirements)
++
++### Producer (API Server - Python)
++- [ ] `POST /rabbitmq/orders` 엔드포인트를 추가하여 `orders` Exchange로 메시지 발행
++- [ ] Exchange 타입: `direct`, Routing Key: `order.created`
++- [ ] 메시지 포맷: 기존 `OrderEvent` (shared_python) 사용
++
++### Consumer — Python Worker (`payment-group` 역할)
++- [ ] `aio-pika`를 사용하여 `orders.queue` 바인딩 후 메시지 수신
++- [ ] 수동 ack 구현: 정상 처리 시 `ack()`, 예외 발생 시 `nack(requeue=False)`
++- [ ] `nack` 된 메시지가 `dead-letter.queue`로 자동 이동하도록 DLQ 설정
++- [ ] 처리 결과를 `processed_events` 테이블에 저장 (mq_type=`rabbitmq`)
++
++### Consumer — Node.js Worker (`inventory-group` 역할)
++- [ ] `amqplib`를 사용하여 `orders.queue` 바인딩 후 메시지 수신
++- [ ] 수동 ack 구현: 정상 처리 시 `ack()`, 예외 발생 시 `nack(false, false)`
++- [ ] DLQ 선언 공유 (Python 워커와 동일 큐 사용)
++- [ ] 처리 결과를 `processed_events` 테이블에 저장 (mq_type=`rabbitmq`)
++
++### DLQ 설정
++- [ ] `orders.queue` 선언 시 `x-dead-letter-exchange` 인수로 `dead-letter.exchange` 지정
++- [ ] `dead-letter.queue`에 바인딩하여 실패 메시지 수집
++
++## 3. 제약사항 및 비기능 요구사항
++- Python: `aio-pika` 비동기 라이브러리 사용 (동기 `pika` 미사용)
++- Node.js: `amqplib` 사용 (기존 kafkajs와 동일한 패턴으로 Worker 파일 구성)
++- 두 Consumer가 같은 큐(`orders.queue`)를 컨슈밍 — RabbitMQ에서는 메시지가 **하나의 Consumer에만** 전달됨을 확인 (Kafka와의 철학 차이 검증)
++- DB 저장 로직은 Spec 2-002에서 확립한 패턴(`ProcessedEvent` SQLModel / pg 헬퍼) 그대로 재사용
++
++## 4. 인수 조건 (Acceptance Criteria)
++
++- **Scenario 1**: 정상 메시지 처리 및 DB 저장
++  - **Given**: Docker Compose로 RabbitMQ와 PostgreSQL이 실행 중이며, Python/Node.js 워커가 `orders.queue`를 구독 중
++  - **When**: `POST /rabbitmq/orders` API 호출로 메시지 발행
++  - **Then**: Python 또는 Node.js 워커 **둘 중 하나만** 메시지를 수신·처리하고, `processed_events` 테이블에 `mq_type='rabbitmq'` 레코드가 저장됨
++
++- **Scenario 2**: 실패 메시지 DLQ 이동 확인
++  - **Given**: Python 워커 내부에 인위적인 예외 발생 조건 추가 (예: 특정 order_id 패턴 시 강제 raise)
++  - **When**: 해당 메시지를 발행
++  - **Then**: RabbitMQ 관리자 UI(http://localhost:15672)에서 `dead-letter.queue`에 해당 메시지가 쌓인 것을 눈으로 확인
++
++- **Scenario 3**: Kafka와의 철학 차이 검증
++  - **Given**: Python Worker(payment)와 Node.js Worker(inventory) 모두 `orders.queue` 구독 중
++  - **When**: 5개의 주문 메시지를 연속 발행
++  - **Then**: 메시지가 두 워커 사이에 **분산**되어 처리되고, 각 메시지는 **단 하나의 워커**만 처리함 (Kafka처럼 두 그룹 모두에게 전달되는 것이 아님)
++
++## 5. 참고 자료 (References)
++
++```mermaid
++flowchart LR
++    A["API Server\n(Producer)"] -- "order.created\n(Routing Key)" --> B["orders\nExchange\n(direct)"]
++    B -- "Binding" --> C["orders.queue"]
++    C -- "Push" --> D["Python Worker\n(payment)"]
++    C -- "Push" --> E["Node.js Worker\n(inventory)"]
++    D -- "nack" --> F["dead-letter\nExchange"]
++    F --> G["dead-letter.queue"]
++    D -- "ack" --> H[("PostgreSQL\nprocessed_events")]
++    E -- "ack" --> H
++```
++
++- [aio-pika docs](https://aio-pika.readthedocs.io/)
++- [amqplib GitHub](https://github.com/amqp-node/amqplib)
++- [RabbitMQ Dead Letter Exchanges](https://www.rabbitmq.com/dlx.html)
+diff --git a/specs/spec-2-003-rabbitmq-impl/task.md b/specs/spec-2-003-rabbitmq-impl/task.md
+new file mode 100644
+index 0000000..27db17f
+--- /dev/null
++++ b/specs/spec-2-003-rabbitmq-impl/task.md
+@@ -0,0 +1,42 @@
++# Task: 2-003 - RabbitMQ 구현 (RabbitMQ MVP)
++
++> 이 문서는 구현을 위한 워크로드입니다.
++> **문서화 단계(Phase A)** 에서 이 문서가 확정되고 사용자의 승인이 떨어지면, **코딩 단계(Phase B)** 로 넘어갑니다.
++> 코딩 단계 진입 후에는 **사용자의 허락을 구하지 말고 자율적으로 끝까지 진행**하며, `[ ]` 항목 하나를 `[x]`로 완료할 때마다 **반드시 1번의 git commit**을 수행하세요.
++
++## 1. 사전 준비 (Setup)
++- [x] 브랜치 생성 (`git checkout -b spec-2-003/rabbitmq-impl`)
++- [x] Python 의존성 추가 (`aio-pika` → `api-server/python/requirements.txt`, `workers/python/requirements.txt`)
++- [x] Node.js 의존성 추가 (`amqplib`, `@types/amqplib` → `workers/node/package.json`, `pnpm install`)
++
++## 2. Producer 구현 (API Server)
++- [ ] `api-server/python/main.py` — `RabbitMQQueue` 클래스 구현 및 `POST /rabbitmq/orders` 엔드포인트 추가
++  - `orders` Exchange (`direct` 타입) 선언
++  - `orders.queue` + DLQ 설정 (`x-dead-letter-exchange`) 선언
++  - `order.created` Routing Key로 메시지 발행
++
++## 3. Python Worker 구현
++- [ ] `workers/python/rabbitmq_worker.py` 파일 생성
++  - `aio-pika` 기반 비동기 Consumer 구현
++  - Prefetch count=1, 수동 ack/nack 로직
++  - `SIMULATE_FAILURE` 환경변수 기반 50% 강제 실패 로직 추가
++  - 정상 처리 시 `processed_events` DB 저장 (`mq_type='rabbitmq'`, `group_id='payment-group'`)
++
++## 4. Node.js Worker 구현
++- [ ] `workers/node/src/rabbitmq.worker.ts` 파일 생성
++  - `amqplib` 기반 Consumer 구현
++  - Prefetch count=1, 수동 ack/nack 로직
++  - 정상 처리 시 `processed_events` DB 저장 (`mq_type='rabbitmq'`, `group_id='inventory-group'`)
++
++## 5. 통합 및 검증 (Integration & Verification)
++- [ ] `docker compose up postgres rabbitmq -d` 로 인프라 기동 확인
++- [ ] Python Worker, Node.js Worker 동시 실행 후 `POST /rabbitmq/orders` 5회 호출
++- [ ] DB에서 `mq_type='rabbitmq'` 레코드 조회 — 각 메시지가 하나의 워커에만 처리됐는지 확인
++- [ ] `SIMULATE_FAILURE=true` Python 워커 실행 후 메시지 발행 → RabbitMQ UI `dead-letter.queue` 적재 확인
++
++## 6. 리뷰 및 마무리 (Review & Wrap-up)
++- [ ] 개발된 내용이 정상 동작하는지 Agent 차원의 자체 로컬 테스트 및 검증 (필수)
++- [ ] 전체 기능 동작 확인 및 린팅(Linting) / 포맷팅(Formatting)
++- [ ] `walkthrough.md` 작성 (아키텍처 다이어그램, 검증 결과 포함)
++- [ ] `pr_description.md` 파일 작성
++- [ ] `git push` 후, `gh pr create --title "feat: Spec 2-003 RabbitMQ MVP 구현" --body-file pr_description.md` 로 PR 생성
+diff --git a/workers/node/package.json b/workers/node/package.json
+index 04f53de..b218ebd 100644
+--- a/workers/node/package.json
++++ b/workers/node/package.json
+@@ -11,6 +11,7 @@
+   "author": "",
+   "license": "ISC",
+   "devDependencies": {
++    "@types/amqplib": "^0.10.8",
+     "@types/node": "25.5.2",
+     "@types/pg": "8.20.0",
+     "ts-node": "10.9.2",
+@@ -20,6 +21,7 @@
+     "@mq/shared-node": "workspace:*",
+     "acorn": "8.16.0",
+     "acorn-walk": "8.3.5",
++    "amqplib": "^1.0.3",
+     "arg": "4.1.3",
+     "create-require": "1.1.1",
+     "diff": "4.0.4",
+diff --git a/workers/python/requirements.txt b/workers/python/requirements.txt
+index 572b352..aa13946 100644
+--- a/workers/python/requirements.txt
++++ b/workers/python/requirements.txt
+@@ -1 +1,2 @@
+ pydantic
++aio-pika
+-- 
+2.50.1 (Apple Git-155)
+

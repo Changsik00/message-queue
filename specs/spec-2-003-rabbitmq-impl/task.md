@@ -16,7 +16,7 @@
   - `order.created` Routing Key로 메시지 발행
 
 ## 3. Python Worker 구현
-- [ ] `workers/python/rabbitmq_worker.py` 파일 생성
+- [x] `workers/python/rabbitmq_worker.py` 파일 생성
   - `aio-pika` 기반 비동기 Consumer 구현
   - Prefetch count=1, 수동 ack/nack 로직
   - `SIMULATE_FAILURE` 환경변수 기반 50% 강제 실패 로직 추가
