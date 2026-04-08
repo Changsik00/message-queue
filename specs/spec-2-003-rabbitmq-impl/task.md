@@ -23,7 +23,7 @@
   - 정상 처리 시 `processed_events` DB 저장 (`mq_type='rabbitmq'`, `group_id='payment-group'`)
 
 ## 4. Node.js Worker 구현
-- [ ] `workers/node/src/rabbitmq.worker.ts` 파일 생성
+- [x] `workers/node/src/rabbitmq.worker.ts` 파일 생성
   - `amqplib` 기반 Consumer 구현
   - Prefetch count=1, 수동 ack/nack 로직
   - 정상 처리 시 `processed_events` DB 저장 (`mq_type='rabbitmq'`, `group_id='inventory-group'`)
