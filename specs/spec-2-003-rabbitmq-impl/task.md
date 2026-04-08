@@ -10,7 +10,7 @@
 - [x] Node.js 의존성 추가 (`amqplib`, `@types/amqplib` → `workers/node/package.json`, `pnpm install`)
 
 ## 2. Producer 구현 (API Server)
-- [ ] `api-server/python/main.py` — `RabbitMQQueue` 클래스 구현 및 `POST /rabbitmq/orders` 엔드포인트 추가
+- [x] `api-server/python/main.py` — `RabbitMQQueue` 클래스 구현 및 `POST /rabbitmq/orders` 엔드포인트 추가
   - `orders` Exchange (`direct` 타입) 선언
   - `orders.queue` + DLQ 설정 (`x-dead-letter-exchange`) 선언
   - `order.created` Routing Key로 메시지 발행
