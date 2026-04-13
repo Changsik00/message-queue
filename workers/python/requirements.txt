@@ -1,2 +1,4 @@
 pydantic
 aio-pika
+rq
+redis
