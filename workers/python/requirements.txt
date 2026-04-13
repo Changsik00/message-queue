@@ -2,3 +2,5 @@ pydantic
 aio-pika
 rq
 redis
+sqlmodel
+psycopg2-binary

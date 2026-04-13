@@ -173,8 +173,14 @@ bullmq_producer = BullMQProducer()
 
 @app.on_event("startup")
 async def startup_event():
-    await queue.start()
-    await rabbitmq_queue.start()
+    try:
+        await queue.start()
+    except Exception as e:
+        print(f"[WARN] KafkaQueue startup failed (Kafka may not be running): {e}")
+    try:
+        await rabbitmq_queue.start()
+    except Exception as e:
+        print(f"[WARN] RabbitMQQueue startup failed (RabbitMQ may not be running): {e}")
 
 @app.on_event("shutdown")
 async def shutdown_event():
