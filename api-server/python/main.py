@@ -2,8 +2,11 @@ import sys
 import os
 import json
 import asyncio
+import time
 from aiokafka import AIOKafkaProducer
 import aio_pika
+import redis as redis_sync
+from rq import Queue as RQQueue
 from fastapi import FastAPI
 from pydantic import BaseModel
 import uvicorn
@@ -108,13 +111,76 @@ class RabbitMQQueue(BaseQueue):
     def consume(self) -> None:
         pass
 
+class BullMQProducer:
+    """BullMQ 큐에 Job을 enqueue하는 Producer.
+
+    BullMQ의 Redis 키 구조에 맞게 직접 데이터를 씁니다:
+    - bull:{queue}:id       → INCR (auto-increment Job ID)
+    - bull:{queue}:{jobId}  → HMSET (Job 데이터)
+    - bull:{queue}:wait     → RPUSH (대기 중인 Job ID 목록)
+
+    Python RQ Worker를 위해 orders-python 큐에도 동시 enqueue합니다.
+    """
+
+    BULL_PREFIX = "bull"
+    BULL_QUEUE = "orders"
+    RQ_QUEUE = "orders-python"
+
+    def __init__(self):
+        redis_url = os.getenv("REDIS_URL", "redis://localhost:6379")
+        self._redis = redis_sync.from_url(redis_url, decode_responses=True)
+        self._rq_queue = RQQueue(self.RQ_QUEUE, connection=redis_sync.from_url(redis_url))
+
+    def _enqueue_bullmq(self, event: OrderEvent) -> str:
+        """BullMQ 포맷으로 Redis에 직접 Job을 추가한다."""
+        job_id = str(self._redis.incr(f"{self.BULL_PREFIX}:{self.BULL_QUEUE}:id"))
+        job_opts = json.dumps({
+            "attempts": 3,
+            "backoff": {"type": "exponential", "delay": 1000},
+        })
+        self._redis.hset(
+            f"{self.BULL_PREFIX}:{self.BULL_QUEUE}:{job_id}",
+            mapping={
+                "name": "order.created",
+                "data": json.dumps(event.model_dump(mode="json")),
+                "opts": job_opts,
+                "timestamp": str(int(time.time() * 1000)),
+                "delay": "0",
+                "priority": "0",
+                "attempts": "0",
+            },
+        )
+        self._redis.rpush(f"{self.BULL_PREFIX}:{self.BULL_QUEUE}:wait", job_id)
+        return job_id
+
+    def _enqueue_rq(self, event: OrderEvent) -> None:
+        """RQ 포맷으로 orders-python 큐에 Job을 추가한다."""
+        self._rq_queue.enqueue(
+            "bullmq_worker.process_order",
+            event.model_dump(mode="json"),
+        )
+
+    def publish(self, event: OrderEvent) -> dict:
+        bull_job_id = self._enqueue_bullmq(event)
+        self._enqueue_rq(event)
+        print(f"BullMQProducer: Published event {event.order_id} (BullMQ jobId={bull_job_id})")
+        return {"bull_job_id": bull_job_id}
+
+
 queue = KafkaQueue()
 rabbitmq_queue = RabbitMQQueue()
+bullmq_producer = BullMQProducer()
 
 @app.on_event("startup")
 async def startup_event():
-    await queue.start()
-    await rabbitmq_queue.start()
+    try:
+        await queue.start()
+    except Exception as e:
+        print(f"[WARN] KafkaQueue startup failed (Kafka may not be running): {e}")
+    try:
+        await rabbitmq_queue.start()
+    except Exception as e:
+        print(f"[WARN] RabbitMQQueue startup failed (RabbitMQ may not be running): {e}")
 
 @app.on_event("shutdown")
 async def shutdown_event():
@@ -146,6 +212,17 @@ async def create_rabbitmq_order(req: CreateOrderRequest):
     )
     await rabbitmq_queue.publish_async(event)
     return {"status": "success", "mq": "rabbitmq", "event": event.model_dump()}
+
+@app.post("/bullmq/orders")
+async def create_bullmq_order(req: CreateOrderRequest):
+    event = OrderEvent(
+        order_id=str(uuid.uuid4()),
+        user_id=str(uuid.uuid4()),
+        amount=req.amount,
+        items=req.items
+    )
+    result = bullmq_producer.publish(event)
+    return {"status": "success", "mq": "bullmq", "event": event.model_dump(), **result}
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
